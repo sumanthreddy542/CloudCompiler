@@ -1,0 +1,105 @@
+{
+	"providers": {
+		"awscloudformation": {
+			"AuthRoleName": "amplify-reactprojectaws-dev-185234-authRole",
+			"UnauthRoleArn": "arn:aws:iam::531004728718:role/amplify-reactprojectaws-dev-185234-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::531004728718:role/amplify-reactprojectaws-dev-185234-authRole",
+			"Region": "us-east-2",
+			"DeploymentBucketName": "amplify-reactprojectaws-dev-185234-deployment",
+			"UnauthRoleName": "amplify-reactprojectaws-dev-185234-unauthRole",
+			"StackName": "amplify-reactprojectaws-dev-185234",
+			"StackId": "arn:aws:cloudformation:us-east-2:531004728718:stack/amplify-reactprojectaws-dev-185234/ac9c3740-8686-11ea-acf8-025084048856",
+			"AmplifyAppId": "d1zx52c92viqbz"
+		}
+	},
+	"function": {
+		"CloudProjectBackendApi": {
+			"build": true,
+			"providerPlugin": "awscloudformation",
+			"service": "Lambda",
+			"lastBuildTimeStamp": "2020-04-25T18:24:46.875Z",
+			"lastPackageTimeStamp": "2020-04-25T18:24:48.122Z",
+			"distZipFilename": "CloudProjectBackendApi-6a65646d464d48333673-build.zip",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-reactprojectaws-dev-185234-deployment/amplify-cfn-templates/function/CloudProjectBackendApi-cloudformation-template.json",
+				"logicalId": "functionCloudProjectBackendApi"
+			},
+			"lastPushTimeStamp": "2020-04-25T19:05:42.283Z",
+			"output": {
+				"Region": "us-east-2",
+				"Arn": "arn:aws:lambda:us-east-2:531004728718:function:GetRepositories-dev",
+				"Name": "GetRepositories-dev",
+				"LambdaExecutionRole": "reactprojectawsLambdaRole453a1dcd-dev"
+			},
+			"lastPushDirHash": "GOGuuG8wyaopqxL6X+k8gH5Uipw="
+		}
+	},
+	"auth": {
+		"cognitoed0b60e7": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-reactprojectaws-dev-185234-deployment/amplify-cfn-templates/auth/cognitoed0b60e7-cloudformation-template.yml",
+				"logicalId": "authcognitoed0b60e7"
+			},
+			"lastPushTimeStamp": "2020-04-25T19:05:42.294Z",
+			"output": {
+				"AppClientSecret": "19tlp1k32di39uq3gq4hc91vn31k81fhbddq5ll6kqh6prn943gh",
+				"UserPoolId": "us-east-2_qohWYIcrZ",
+				"AppClientIDWeb": "kbdpuobi7unti3bcd1orauass",
+				"AppClientID": "4f1g8cbs75dp05jck07aa8sjgb",
+				"IdentityPoolId": "us-east-2:8a3e85b0-eebc-41c4-bfb2-2936406c632c",
+				"IdentityPoolName": "reactprojectaws_identitypool_84ff2d24__dev",
+				"UserPoolName": "reactprojectaws_userpool_84ff2d24"
+			},
+			"lastPushDirHash": "bdFvoFW2Si3DAnm4cX/oKZOzLOw=",
+			"dependsOn": [],
+			"customAuth": false
+		}
+	},
+	"api": {
+		"BackendApi": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "CloudProjectBackendApi",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			],
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-reactprojectaws-dev-185234-deployment/amplify-cfn-templates/api/BackendApi-cloudformation-template.json",
+				"logicalId": "apiBackendApi"
+			},
+			"lastPushTimeStamp": "2020-04-25T19:05:42.287Z",
+			"output": {
+				"ApiName": "BackendApi",
+				"RootUrl": "https://zfzo0lf8fc.execute-api.us-east-2.amazonaws.com/dev",
+				"ApiId": "zfzo0lf8fc"
+			},
+			"lastPushDirHash": "om32tKin1ppLkd/ha8/YRwkOkLY="
+		}
+	},
+	"hosting": {
+		"S3AndCloudFront": {
+			"service": "S3AndCloudFront",
+			"providerPlugin": "awscloudformation",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-reactprojectaws-dev-185234-deployment/amplify-cfn-templates/hosting/template.json",
+				"logicalId": "hostingS3AndCloudFront"
+			},
+			"lastPushTimeStamp": "2020-04-25T19:05:42.289Z",
+			"output": {
+				"S3BucketSecureURL": "https://reactprojectaws-20200425134125-hostingbucket-dev.s3.amazonaws.com",
+				"WebsiteURL": "http://reactprojectaws-20200425134125-hostingbucket-dev.s3-website.us-east-2.amazonaws.com",
+				"Region": "us-east-2",
+				"HostingBucketName": "reactprojectaws-20200425134125-hostingbucket-dev"
+			},
+			"lastPushDirHash": "Suhz8jB6noYHDyIuF2Aow1Tlxl0="
+		}
+	}
+}
