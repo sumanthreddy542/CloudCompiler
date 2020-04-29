@@ -12,6 +12,7 @@ class ListFiles extends Component {
     }
      
     handleSubmit(event) {
+        //window.open('/files', "_blank");
         Storage.list('')
             .then(result => {
                 const arr = result.map(item => {
@@ -26,6 +27,7 @@ class ListFiles extends Component {
       return ( 
           <div>
               <button type="button" value="List" onClick={this.handleSubmit} />
+
               <ul>
                   {this.state.value.map(item => (
                       <li key = {item} className = "checkbox">

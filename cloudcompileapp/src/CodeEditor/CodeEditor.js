@@ -13,23 +13,26 @@ const code = `function add(a, b) {
 class CodeEditor extends Component {
     constructor(props) {
         super(props);
-        this.state = { code: props.code }
+        var code = this.props.code; 
+        this.state = { code }
     }
 
     render() {
         return (
-            <Editor
-                value={this.state.code}
-                onValueChange={code => this.setState({ code })}
-                highlight={code => highlight(code, languages.java)}
-                padding={10}
-                style={{
-                    fontFamily: '"Fira code", "Fira Mono", monospace',
-                    fontSize: 12,
-                }}
-            />
+            <div>
+                <Editor
+                    value={this.state.code}
+                    onValueChange={code => this.setState({ code })}
+                    highlight={code => highlight(code, languages.java)}
+                    padding={10}
+                    style={{
+                        fontFamily: '"Fira code", "Fira Mono", monospace',
+                        fontSize: 12,
+                    }}
+                />
+            </div>
         );
     }
 }
 
-export default CodeEdit;
+export default CodeEditor;

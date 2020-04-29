@@ -5,6 +5,7 @@ import { withAuthenticator, AmplifySignOut, AmplifyButton, AmplifyGreetings } fr
 import Amplify from 'aws-amplify';
 import CreateFile from './S3/CreateFileComponent';
 import ListFiles from './S3/ListFilesComponent';
+import GetFile from './S3/GetFileContentsComponent';
 Amplify.configure(awsconfig);
 
 function App() {
@@ -16,7 +17,10 @@ function App() {
         </div>
         <div>
           <ListFiles/>
-        </div>        
+        </div>
+        <div>
+          <GetFile/>
+        </div>     
     </div>
   );
 }
