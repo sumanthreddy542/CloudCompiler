@@ -1,21 +1,22 @@
 import React from 'react';
 import './App.css';
-import Auth, {API} from 'aws-amplify';
-import awsconfig from './aws-exports'
+import awsconfig from './aws-exports';
 import { withAuthenticator, AmplifySignOut, AmplifyButton, AmplifyGreetings } from '@aws-amplify/ui-react';
-//import Test from './Test';
-//import { Connect } from 'aws-amplify-react';
-Auth.configure(awsconfig);
+import Amplify from 'aws-amplify';
+import CreateFile from './S3/CreateFileComponent';
+import ListFiles from './S3/ListFilesComponent';
+Amplify.configure(awsconfig);
 
 function App() {
   return (
     <div className="App">
       <AmplifyGreetings><AmplifySignOut/></AmplifyGreetings>
         <div>
-          <AmplifyButton> List projects</AmplifyButton>
+          <CreateFile/>
         </div>
         <div>
-        </div>
+          <ListFiles/>
+        </div>        
     </div>
   );
 }
