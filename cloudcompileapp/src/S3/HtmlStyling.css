@@ -65,12 +65,41 @@
     flex-direction: row;
     align-items: center;
   }
+
+  #blue-button
+  {
+    background-color:#008CBA;
+    float:center;
+  }
+  #blue-button:hover {background-color: #00316e}
+
+  #red-button
+  {
+    background-color:#f44336;
+    float:right;
+    
+  }
+  #red-button:hover {background-color: #880000}
+
+  #out
+  {
+    float:right;
+    border: 1px solid black;
+    margin:auto;
+    min-width: 400px;
+    min-height: 300px;
+  }
+  #button-div
+  {
+    padding-right: 15%;
+    padding-left: 15%;
+  }
   
   button {
     font-family: "Roboto medium", sans-serif;
     font-size: 14px;
     display: inline-block;
-    height: 10px;
+    height: 30px;
     min-width: 50px;
     padding: 6px 16px;
     line-height: 1.42857143;
@@ -86,10 +115,13 @@
     user-select: none;
     border: 0;
     border-radius: 2px;
-    background: rgba(103, 58, 183, 1);
+    background-color: #4CAF50; /* Green */
+  /*  background: rgba(103, 58, 183, 1);*/
     color: #fff;
     outline: 0;
   }
+
+  button:hover {background-color: #3e8e41}
   
   button:disabled {
     background: rgb(189, 189, 189);

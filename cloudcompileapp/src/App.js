@@ -6,6 +6,7 @@ import Amplify from 'aws-amplify';
 import CreateFile from './S3/CreateFileComponent';
 import ListFiles from './S3/ListFilesComponent';
 import GetFile from './S3/GetFileContentsComponent';
+import Editor from './CodeEditor/ace'
 Amplify.configure(awsconfig);
 
 function App() {
@@ -19,8 +20,10 @@ function App() {
           <ListFiles/>
         </div>
         <div>
-          <GetFile/>
-        </div>     
+         
+        </div>
+       
+             
     </div>
   );
 }
