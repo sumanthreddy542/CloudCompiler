@@ -19,6 +19,12 @@ class ListFiles extends Component {
         this.setState({
           selection: newValue.currentTarget.value
         });
+        var s=newValue.currentTarget.value;
+        
+
+        Storage.put('run.txt',s)
+            .then(result => console.log(result))
+            .catch(err => console.log(err));
 
       //  pname=this.state.selection;
 
