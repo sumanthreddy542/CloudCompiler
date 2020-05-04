@@ -1,58 +1,60 @@
 import React, { Component } from "react";
-import {Storage, a} from 'aws-amplify';
+import { Storage } from 'aws-amplify';
 import "./HtmlStyling.css";
-import { Auth} from 'aws-amplify';
 
-class CreateFile extends Component { 
+class CreateFile extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {value: '',var:''};
-    
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-     
-    handleChange(event) {
-        this.setState({ value: event.target.value + '.java'});
-        this.setState({ var: event.target.value });
-    }
+  constructor(props) {
+    super(props);
+    this.state = { value: '' };
 
-    async handleSubmit(event) {
-      const tokens = await Auth.currentSession();
-      const userName = tokens.getIdToken().payload['cognito:username'];
-      var path=userName+'/'+this.state.value;
-      var consolefilepath=userName+'/'+this.state.var+'_console.log';
-      var outputfilepath=userName+'/'+this.state.var+'_output.log';
-      var classcontent='public class '+this.state.var+'{                       }';
-      console.log(path);
-       // Storage.put(this.state.value, "public class Main{                      }")
-        Storage.put(path,classcontent)
-            .then(result => console.log(result))
-            .catch(err => console.log(err));
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-            Storage.put(consolefilepath,'')
-            .then(result => console.log(result))
-            .catch(err => console.log(err));
+  handleChange(event) {
+    this.setState({ value: event.target.value });
+  }
 
-            Storage.put(outputfilepath,'//Output displays here. Wait...')
-            .then(result => console.log(result))
-            .catch(err => console.log(err));
-    };
-     
-    render() { 
-      return ( 
-          <div>
-            <br/>
-            <label>  Name:
+  async handleSubmit(event) {
+    // const tokens = await Auth.currentSession();
+    // const userName = tokens.getIdToken().payload['cognito:username'];
+    // var path=userName+'/'+this.state.value;
+    // var consolefilepath=userName+'/'+this.state.var+'_console.log';
+    // var outputfilepath=userName+'/'+this.state.var+'_output.log';
+    // var classcontent='public class '+this.state.var+'{                       }';
+    // console.log(path);
+    // Storage.put(this.state.value, "public class Main{                      }")
+
+    let javaFile = 'javafiles/' + this.state.value + ".java";
+    let initialFileContent = "public class " + this.state.value + "{ \n public static void main(String[] args) { \n \t} \n }";
+
+    Storage.put(javaFile, initialFileContent)
+      .then(result => console.log(result))
+      .catch(err => console.log(err));
+
+    // Storage.put(consolefilepath,'')
+    // .then(result => console.log(result))
+    // .catch(err => console.log(err));
+
+    // Storage.put(outputfilepath,'//Output displays here. Wait...')
+    // .then(result => console.log(result))
+    // .catch(err => console.log(err));
+  };
+
+  render() {
+    return (
+      <div>
+        <br />
+        <label> File Name:
+        &nbsp;
+            <input type="text" onChange={this.handleChange} />
+        </label>
             &nbsp;
-            <input type="text" onChange={this.handleChange}/>
-            </label>
-            &nbsp;
-            <button type="button" value="Submit" onClick={this.handleSubmit} >Create Project</button>
-          </div>
-      ); 
-    } 
-  } 
-  
-  export default CreateFile;
+        <button type="button" value="Create Project" onClick={this.handleSubmit}> Create Project </button>
+      </div>
+    );
+  }
+}
+
+export default CreateFile;

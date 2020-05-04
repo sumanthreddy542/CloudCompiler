@@ -1,73 +1,74 @@
 import React, { Component } from "react";
-import {Storage} from 'aws-amplify';
-import { Auth} from 'aws-amplify';
+import { Storage } from 'aws-amplify';
+//import { Auth } from 'aws-amplify';
 import GetFile from "./GetFileContentsComponent";
-//import "./HtmlStyling.css";
+import "./HtmlStyling.css";
 
-const pname='';
-class ListFiles extends Component { 
+var radioGroup = require('react-radio-group');
 
-
+class ListFiles extends Component {
     constructor(props) {
         super(props);
-        this.state = {value: [],selection:''};
-    
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-     
-    handleChange = (newValue) => {
-        this.setState({
-          selection: newValue.currentTarget.value
-        });
-        var s=newValue.currentTarget.value;
-        
+        this.state = {
+            value: [],
+            selection: '',
+            selectionChanged: false
+        };
 
-        Storage.put('run.txt',s)
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    runFile = () => {
+        Storage.put('run.txt', this.state.selection)
             .then(result => console.log(result))
             .catch(err => console.log(err));
+    }
 
-      //  pname=this.state.selection;
-
-        console.log(this.state.selection);
-      }
-    
+    handleChange = (value) => {
+        this.setState({
+            selection: 'javafiles/' + value,
+            selectionChanged: true
+        }, this.runFile);
+    }
 
     async handleSubmit(event) {
-        //window.open('/files', "_blank");
-        const tokens = await Auth.currentSession();
-        const userName = tokens.getIdToken().payload['cognito:username'];
-        var listfolder=userName+'/';
-        Storage.list(listfolder)
+        // const tokens = await Auth.currentSession();
+        // const userName = tokens.getIdToken().payload['cognito:username'];
+        // var listfolder = userName + '/';
+        Storage.list('javafiles/')
             .then(result => {
                 const arr = result.map(item => {
-                    return item.key;
+                    let fileNameKey = item.key.split("/")[1];
+                    return fileNameKey;
                 })
-                this.setState({value: arr});
+                this.setState({ value: arr });
             })
             .catch(err => console.log(err));
     };
-     
-    render() { 
-      return ( 
-          <div>
-              <br/>
-              <button type="button" value="List" onClick={this.handleSubmit} >List Projects</button>
 
-              <ul>
-                  {this.state.value.map(item => (
-                      <li key = {item} className = "radio">
-                          <label>
-                              <input type = "radio" value={item} onChange={this.handleChange} name = 'item'/>
-                              {item}
-                          </label>
-                      </li>
-                  ))}
-              </ul>
-              <GetFile pname={this.state.selection}/>
-          </div>
-      ); 
-    } 
-  } 
-  
-  export default ListFiles;
-  
+    render() {
+        return (
+            <div>
+                <br />
+                <button type="button" value="List Files" onClick= {this.handleSubmit}> List Files </button>
+                <div>
+                    {<radioGroup.RadioGroup name="files" onChange= {this.handleChange}>
+                    <ul>
+                        {this.state.value.map(item => (
+                            <li>
+                                <radioGroup.Radio value={item} />
+                                {item}
+                            </li>
+                        ))}
+                    </ul>
+                    </radioGroup.RadioGroup>}
+                </div>
+                {this.state.selectionChanged === true && 
+                <GetFile fileName= {this.state.selection} />}
+            </div>
+        );
+    }
+}
+
+export default ListFiles;

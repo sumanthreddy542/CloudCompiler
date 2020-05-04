@@ -127,3 +127,7 @@
     background: rgb(189, 189, 189);
     cursor: default;
   }
+
+  ul {
+    list-style-type: none;
+  }

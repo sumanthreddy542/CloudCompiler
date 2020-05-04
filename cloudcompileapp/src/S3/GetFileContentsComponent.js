@@ -1,47 +1,36 @@
 import React, { Component } from "react";
-import {Storage} from 'aws-amplify';
-import CodeEditor from '../CodeEditor/CodeEditor';
-import Editor2 from '../CodeEditor/ace';
-import Editor from '../CodeEditor/CodeEditor'
+import { Storage } from 'aws-amplify';
 import "./HtmlStyling.css";
+import AceCodeEditor from "../CodeEditor/ace";
 
-class GetFile extends Component { 
+class GetFile extends Component {
+  constructor(props) {
+    super(props);
 
-    constructor(props) {
-        super(props);
-        var pname=this.props.pname;
-        this.state = {value: '',pname};
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-     
-    async handleSubmit(event) {
-        var response = await Storage.get(this.props.pname, {download: true})
-            .catch(err => console.log(err));
-        this.setState({pname:this.props.pname})
-
-        this.setState({value: response.Body})
+    this.state = {
+      value: '',
+      fileName: this.props.fileName
     };
-     
-    render() { 
-      return (
-        
-          <div id="button-div">
-           
-            <button id="blue-button" type="button" value="OpenInEditor" onClick={this.handleSubmit} >Select Project</button>
-          
-            
 
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-            {this.state.value != '' && <Editor2 code= {this.state.value} pname={this.state.pname}/>}
-            
+  async handleSubmit(event) {
+    let response = await Storage.get(this.props.fileName, { download: true })
+      .catch(err => console.log(err));
 
-            
-            {this.state.value != '' && <Editor2 /> && <CodeEditor code= {this.state.value} />} 
-          </div>
-          
-            
-      ); 
-    } 
-  } 
-  
-  export default GetFile;
+    this.setState({ value: response.Body })
+  };
+
+  render() {
+    return (
+      <div id="button-div">
+        <button id= "blue-button" type= "button" value= "OpenInEditor" onClick= {this.handleSubmit}> Open File in Editor </button>
+
+        {this.state.value !== '' && <AceCodeEditor code= {this.state.value} fileName= {this.state.fileName}/>}
+      </div>
+    );
+  }
+}
+
+export default GetFile;
