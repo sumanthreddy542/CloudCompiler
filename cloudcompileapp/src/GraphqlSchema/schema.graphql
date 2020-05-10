@@ -1,0 +1,23 @@
+type Code {
+	#  The message content.
+	content: String!
+}
+
+type Mutation {
+	updateCode(content: String!): Code
+}
+
+type Query {
+	allCode: String
+}
+
+type Subscription {
+	subscribeToUpdateCode: Code
+		@aws_subscribe(mutations: ["updateCode"])
+}
+
+schema {
+	query: Query
+	mutation: Mutation
+	subscription: Subscription
+}
