@@ -21,7 +21,6 @@ class ListFiles extends Component {
 
     runFile = () => {
         Storage.put('run.txt', this.state.selection)
-            .then(result => console.log(result))
             .catch(err => console.log(err));
     }
 

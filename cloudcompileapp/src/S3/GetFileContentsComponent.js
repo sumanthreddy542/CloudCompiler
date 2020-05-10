@@ -16,18 +16,21 @@ class GetFile extends Component {
   }
 
   async handleSubmit(event) {
+    this.state.value = '';
     let response = await Storage.get(this.props.fileName, { download: true })
       .catch(err => console.log(err));
-
-    this.setState({ value: response.Body })
+    this.setState({ 
+      value: response.Body
+     })
   };
+
 
   render() {
     return (
       <div id="button-div">
         <button id= "blue-button" type= "button" value= "OpenInEditor" onClick= {this.handleSubmit}> Open File in Editor </button>
 
-        {this.state.value !== '' && <AceCodeEditor code= {this.state.value} fileName= {this.state.fileName}/>}
+        {this.state.value !== '' && <AceCodeEditor code= {this.state.value} fileName= {this.props.fileName}/>}
       </div>
     );
   }

@@ -29,8 +29,9 @@ class CreateFile extends Component {
     let javaFile = 'javafiles/' + this.state.value + ".java";
     let initialFileContent = "public class " + this.state.value + "{ \n public static void main(String[] args) { \n \t} \n }";
 
+    //console.log("create");
+
     Storage.put(javaFile, initialFileContent)
-      .then(result => console.log(result))
       .catch(err => console.log(err));
 
     // Storage.put(consolefilepath,'')
