@@ -1,0 +1,58 @@
+exports.handler = async (event) => {
+
+  const fs = require('fs')
+  const SSH = require('simple-ssh');
+  const pemfile = 'mykey.pem';// add the pem file in lambda file directory in aws console.
+  const user = 'ec2-user';
+  const host = '';
+
+  // all this config could be passed in via the event
+  const ssh = new SSH({
+    host: host,
+    user: user,
+    key: fs.readFileSync(pemfile)
+  });
+
+  let cmd = "ls";
+  if (event.cmd == "long") {
+    cmd += " -l";
+  }
+
+  let prom = new Promise(function(resolve, reject) {
+    
+      
+      const bucket = event.Records[0].s3.bucket.name;
+      const key = decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, ' '));
+      const region = event.Records[0].awsRegion;
+      //var s3FileCommand = 'aws s3 cp s3://' + bucket + '/' + key + ' ./' + key + ' --region ' + region;
+      var s3FileCommand = 'sh compile.sh';
+    let ourout = "";
+//aws s3 cp s3://newbucket323/user/C1.pdf data/
+    ssh.exec('' + s3FileCommand, {
+      exit: function() {
+        ourout += "\nsuccessfully exited!";
+        resolve(ourout);
+      },
+      out: function(stdout) {
+        ourout += stdout;
+      }
+    }).start({
+      success: function() {
+        console.log("successful connection!");
+      },
+      fail: function(e) {
+        console.log("failed connection, boo");
+        console.log(e);
+      }
+    });
+
+  });
+
+  const res = await prom;
+
+  const response = {
+    statusCode: 200,
+    body: res,
+  };
+  return response;
+};
